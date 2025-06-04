@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nosso Dia!</title>
+  <style>
+    /* Cole aqui o CSS gerado pelo seu script.js */
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #001f4d, #001f4d);
+      color: #f0e6f6;
+      min-height: 100vh;
+    }
+    /* ...restante do seu CSS... */
+    /* Inclua todo o CSS que está na variável css do seu script.js */
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/8648/8648121.png">
+</head>
+<body>
+  <header>
+    <h1>Nosso Dia!</h1>
+  </header>
+  <div style="max-width:400px;margin:24px auto 0 auto;">
+    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/04PlQmD52bJDdRsKEgG99I" width="100%" height="80" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"></iframe>
+  </div>
+  <main>
+    <div style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
+      <!-- Carrossel de imagens -->
+      <div class="carousel">
+        <div class="carousel-frame">
+          <img src="SUA_IMAGEM_1" class="carousel-img active">
+          <img src="SUA_IMAGEM_2" class="carousel-img">
+          <!-- Adicione mais imagens se quiser -->
+        </div>
+      </div>
+      <div class="countdown-heart" style="margin-top:24px;">
+        <div class="countdown-label">Te amo há:</div>
+        <div class="countdown-value">
+          <span id="countdown"></span>
+          <span class="heart">
+            <svg viewBox="0 0 32 29.6">
+              <path d="M23.6,0c-2.7,0-5.1,1.3-6.6,3.3C15.5,1.3,13.1,0,10.4,0C4.7,0,0,4.7,0,10.4
+                c0,6.1,5.7,11.1,14.3,18.3l1.7,1.5l1.7-1.5C26.3,21.5,32,16.5,32,10.4C32,4.7,27.3,0,23.6,0z"/>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </div>
+  </main>
+  <section style="text-align:center; margin:32px 0 0 0;">
+    <div style="font-size:0.95rem; max-width:600px; margin:0 auto 20px auto; text-align:center; line-height:1.5;">
+      <p style="margin:0;">Sua mensagem especial aqui!</p>
+      <hr style="border:0; border-top:2px solid rgb(0, 229, 236); width:180px; margin:18px auto 0 auto; opacity:0.5;">
+    </div>
+  </section>
+  <div id="coracao-cascata"></div>
+  <script>
+    // Contador
+    function updateCountdown(startDate, countdownElement) {
+      function update() {
+        const now = new Date();
+        const targetDate = new Date(startDate);
+        let years = now.getFullYear() - targetDate.getFullYear();
+        let months = now.getMonth() - targetDate.getMonth();
+        let days = now.getDate() - targetDate.getDate();
+        let hours = now.getHours() - targetDate.getHours();
+        let minutes = now.getMinutes() - targetDate.getMinutes();
+        let seconds = now.getSeconds() - targetDate.getSeconds();
+        if (seconds < 0) { seconds += 60; minutes--; }
+        if (minutes < 0) { minutes += 60; hours--; }
+        if (hours < 0) { hours += 24; days--; }
+        if (days < 0) {
+          const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+          days += prevMonth.getDate();
+          months--;
+        }
+        if (months < 0) { months += 12; years--; }
+        let texto = "";
+        if (years > 0) texto += `${years} ano${years > 1 ? 's' : ''}, `;
+        if (months > 0 || years > 0) texto += `${months} mes${months !== 1 ? 'es' : ''}, `;
+        texto += `${days} dia${days !== 1 ? 's' : ''}, `;
+        texto += `${hours} hora${hours !== 1 ? 's' : ''}, `;
+        texto += `${minutes} minuto${minutes !== 1 ? 's' : ''}, `;
+        texto += `${seconds} segundo${seconds !== 1 ? 's' : ''}`;
+        countdownElement.textContent = texto;
+      }
+      update();
+      setInterval(update, 1000);
+    }
+    updateCountdown('2024-11-20', document.getElementById('countdown'));
+
+    // Carrossel
+    let current = 0;
+    function moveCarousel(dir) {
+      const imgs = document.querySelectorAll('.carousel-img');
+      if(imgs.length === 0) return;
+      imgs[current].classList.remove('active');
+      current = (current + dir + imgs.length) % imgs.length;
+      imgs[current].classList.add('active');
+    }
+    setInterval(() => moveCarousel(1), 3000);
+
+    // Cascata de corações
+    function criarCoracao() {
+      const coracao = document.createElement('div');
+      coracao.className = 'coracao-cascata';
+      coracao.style.left = Math.random() * 100 + 'vw';
+      coracao.style.animationDuration = (2 + Math.random() * 3) + 's';
+      document.getElementById('coracao-cascata').appendChild(coracao);
+      setTimeout(() => coracao.remove(), 5000);
+    }
+    setInterval(criarCoracao, 150);
+  </script>
+</body>
+</html>
