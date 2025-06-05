@@ -158,10 +158,6 @@
           opacity: 0.2;
         }
       }
-      .coracao-cascata::before {
-        content: "❤";
-        font-family: Arial, sans-serif;
-      }
       footer {
         color: #fff;
         text-align: center;
@@ -311,13 +307,20 @@
 
     // Cascata de corações
     function criarCoracao() {
-      const coracao = document.createElement('div');
-      coracao.className = 'coracao-cascata';
-      coracao.style.left = Math.random() * 100 + 'vw';
-      coracao.style.animationDuration = (2 + Math.random() * 3) + 's';
-      document.getElementById('coracao-cascata').appendChild(coracao);
-      setTimeout(() => coracao.remove(), 5000);
-    }
+  const coracao = document.createElement('div');
+  coracao.className = 'coracao-cascata';
+  coracao.style.left = Math.random() * 100 + 'vw';
+  coracao.style.animationDuration = (2 + Math.random() * 3) + 's';
+  coracao.innerHTML = `
+    <svg viewBox="0 0 32 29.6" width="32" height="29" style="display:block;">
+      <path d="M23.6,0c-2.7,0-5.1,1.3-6.6,3.3C15.5,1.3,13.1,0,10.4,0C4.7,0,0,4.7,0,10.4
+        c0,6.1,5.7,11.1,14.3,18.3l1.7,1.5l1.7-1.5C26.3,21.5,32,16.5,32,10.4C32,4.7,27.3,0,23.6,0z"
+        fill="rgb(45, 171, 255)" filter="drop-shadow(0 0 5px rgb(45, 171, 255))"/>
+    </svg>
+  `;
+  document.getElementById('coracao-cascata').appendChild(coracao);
+  setTimeout(() => coracao.remove(), 5000);
+}
     setInterval(criarCoracao, 150);
   </script>
 </body>
